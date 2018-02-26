@@ -1,0 +1,105 @@
+swagger: '2.0'
+info:
+  title: api接口文档
+  description: tms系统接口文档
+  version: 1.0.0
+schemes:
+  - http
+produces:
+  - application/json
+securityDefinitions:
+  Authorization:
+    type: apiKey
+    name: Authorization
+    in: header
+security:
+  - Authorization: []
+paths:
+  /api/upload/file:
+    post:
+      tags:
+        - common
+      consumes:
+        - multipart/form-data
+      summary: 上传
+      description: 上传
+      produces:
+        - application/json
+      parameters:
+        - name: file
+          in: formData
+          description: file to upload
+          required: true
+          type: file
+      responses:
+        '200':
+          description: 操作成功
+
+  /api/download:
+    get:
+      tags:
+        - common
+      summary: 下载文件
+      description: 下载文件
+      produces:
+        - ''
+      parameters:
+        - name: file_id
+          in: query
+          description: 文件的id
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: 操作成功
+
+
+  /api/article/get-list:
+    get:
+      tags:
+        - article
+      summary: 获取文章列表
+      description: '根据module_id获取文章列表，如果不穿，则默认获取全部'
+      produces:
+        - application/json
+      parameters:
+        - name: module_id
+          in: query
+          description: 模块id
+          required: false
+          type: integer
+        - name: display_name
+          in: query
+          description: 操作人
+          required: false
+          type: string
+      responses:
+        '200':
+          description: 操作成功
+          schema:
+
+definitions:
+  Article:
+    properties:
+      module_id:
+        description: 文章所属模块id
+        example: 1
+      name:
+        description: 文章名称
+        example: 震惊！这个男人居然……
+      abstract:
+        description: 文章摘要
+        example: 据悉
+      content:
+        description: 文章具体内容
+        example: 哈哈哈
+    type: object
+    items:
+      $ref: '#/definitions/Article'
+tags:
+  - name: article
+    description: 文章列表
+    externalDocs:
+      description: 根据模块查询文章列表
+      url: 'http://api.hushengguo.com/api/article'
+
