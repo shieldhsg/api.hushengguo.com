@@ -9,10 +9,10 @@ $baseRuleConfigs = [
 //api接口路由
 $apiRuleConfigs = [
     [
-        'controller' => ['api/user'],
+        'controller' => ['api/article'],
         'patterns' => [
             //获取信息
-            'GET info' => 'info'
+            'GET' => 'get'
         ],
     ],
     //上传接口

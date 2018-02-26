@@ -54,7 +54,7 @@ paths:
           description: 操作成功
 
 
-  /api/article/get-list:
+  /api/article:
     get:
       tags:
         - article
