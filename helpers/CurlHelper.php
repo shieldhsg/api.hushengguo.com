@@ -18,6 +18,7 @@ class CurlHelper
         //执行命令
         $data = curl_exec($curl);
         //关闭URL请求
+        echo 321321;die;
         print curl_getinfo($curl, CURLINFO_HEADER_OUT); //官方文档描述是“发送请求的字符串”，其实就是请求的header。这个就是直接查看请求header，因为上面允许查看
         die;
         curl_close($curl);
