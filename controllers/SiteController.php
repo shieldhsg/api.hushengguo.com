@@ -28,7 +28,7 @@ class SiteController extends BaseController
         $headers[] = 'connection:keep-alive';
         $headers[] = 'content-type:application/json';
         $params = array();
-        //date_default_timezone_set("PRC");
+        date_default_timezone_set("PRC");
         $timestamp = new \DateTime();
         $timestamp->setTimestamp(time());
         $options = array(SignOption::TIMESTAMP => $timestamp);
@@ -250,7 +250,7 @@ class SampleSigner
         } else {
             $timestamp = $options[SignOption::TIMESTAMP];
         }
-        //$timestamp->setTimezone(new \DateTimeZone("UTC"));
+        $timestamp->setTimezone(new \DateTimeZone("UTC"));
         //生成authString
         $authString = SampleSigner::BCE_AUTH_VERSION . '/' . $accessKeyId . '/'
             . $timestamp->format("Y-m-d\TH:i:s\Z") . '/' . $expirationInSeconds;
