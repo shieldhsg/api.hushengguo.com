@@ -22,12 +22,11 @@ class SiteController extends BaseController
         $signer = new SampleSigner();
         $credentials = array("ak" => "8136a22f945b44a1b4ed333bb214c1ad","sk" => "dcd0abfb01f34442b4293c4254937d25");
         $httpMethod = "GET";
-        $headers['accept-encoding:'] = 'gzip, deflate';
-        $headers['x-bce-date:'] = $this->getDate();
-        $headers['host:'] = 'referer.bj.baidubce.com';
+        $headers[] = 'accept-encoding: gzip, deflate';
+        $headers[] ='x-bce-date: '. $this->getDate();
         //$headers['accept'] = '/';
-        $headers['connection:'] = 'keep-alive';
-        $headers['content-type:'] = 'application/json';
+        $headers[] = 'connection:keep-alive';
+        $headers[] = 'content-type:application/json';
         $headers[] = 'content-type:application/json';
         $headers [] = 'User-Agent:php test';
         $params = array();
@@ -37,7 +36,7 @@ class SiteController extends BaseController
         $options = array(SignOption::TIMESTAMP => $timestamp);
 // $options = array(SignOption::TIMESTAMP => $timestamp, SignOption::HEADERS_TO_SIGN => array("Content-Type", "Host", "x-bce-date"));
         $ret = $signer->sign($credentials, $httpMethod, $uri, $headers, $params, $options);
-        $headers['authorization'] =  $ret;
+        $headers[] =  'authorization: '.$ret;
         $res = CurlHelper::get($host . $uri, $headers);
         print $res;
     }
