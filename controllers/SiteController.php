@@ -38,11 +38,12 @@ class SiteController extends BaseController
         $http_method = "GET";
         $canonicalURI = $this->uriEncode($uri,false);
         $canonicalQueryString = '';
-        $canonicalHeaders = '';
+        $canonicalHeaders = 'host:bj.bcebos.com';
         $canonicalRequest = $http_method."\n".$canonicalURI."\n".$canonicalQueryString. "\n".$canonicalHeaders;
+        var_dump($canonicalRequest);die;
         $signKey = strtolower(bin2hex(hash_hmac('sha256', $preFix, $secretKey, true)));
         $signature = strtolower(bin2hex(hash_hmac('sha256', $signKey, $canonicalRequest, true)));
-        $signString = 'bce-auth-v1/'.$accessKey.'/'.$this->getDate().'/'.$expireTime.'/ /'.$signature;
+        $signString = 'bce-auth-v1/'.$accessKey.'/'.$this->getDate().'/'.$expireTime.'/host/'.$signature;
         return $signString;
     }
 
