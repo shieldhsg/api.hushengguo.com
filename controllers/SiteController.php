@@ -38,7 +38,8 @@ class SiteController extends BaseController
 // $options = array(SignOption::TIMESTAMP => $timestamp, SignOption::HEADERS_TO_SIGN => array("Content-Type", "Host", "x-bce-date"));
         $ret = $signer->sign($credentials, $httpMethod, $path, $headers, $params, $options);
         $headers[] = 'authorization: '.$ret;
-        $res = CurlHelper::get('http://'.$host.$uri,$headers);
+        print  $ret;die;
+        $res = CurlHelper::get($host.$uri,$headers);
         print $res;
     }
 
@@ -224,6 +225,10 @@ class SampleSigner
             "content-md5",
         );
     }
+    function getDate()
+    {
+        return date('Y-m-d').'T'.date('H:i:s').'Z';
+    }
 
     //签名函数
     public function sign(
@@ -253,11 +258,11 @@ class SampleSigner
         } else {
             $timestamp = $options[SignOption::TIMESTAMP];
         }
-        $timestamp->setTimezone(new \DateTimeZone("UTC"));
 
+        $timestamp->setTimezone(new \DateTimeZone("UTC"));
         //生成authString
         $authString = SampleSigner::BCE_AUTH_VERSION . '/' . $accessKeyId . '/'
-            . $timestamp->format("Y-m-d\TH:i:s\Z") . '/' . $expirationInSeconds;
+            . $this->getDate(). '/' . $expirationInSeconds;
 
         //使用sk和authString生成signKey
         $signingKey = hash_hmac('sha256', $authString, $secretAccessKey);
