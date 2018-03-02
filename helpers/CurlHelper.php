@@ -4,7 +4,7 @@ namespace app\helpers;
 class CurlHelper
 {
 
-    public static  function get($url,$header='')
+    public static  function get($url,$header)
     {
         $curl = curl_init();
         //设置抓取的url
@@ -13,12 +13,7 @@ class CurlHelper
         curl_setopt($curl, CURLOPT_HEADER, false);
         //设置获取的信息以文件流的形式返回，而不是直接输出。
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        if($header==''){
-            $header [] = "Accept-Language: zh-CN;q=0.8";
-            curl_setopt ( $curl, CURLOPT_HTTPHEADER, $header );
-        }else{
-            curl_setopt ( $curl, CURLOPT_HTTPHEADER, $header );
-        }
+        curl_setopt ( $curl, CURLOPT_HTTPHEADER, $header );
         //执行命令
         $data = curl_exec($curl);
         //关闭URL请求
