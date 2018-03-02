@@ -23,14 +23,14 @@ class SiteController extends BaseController
         $credentials = array("ak" => "8136a22f945b44a1b4ed333bb214c1ad","sk" => "dcd0abfb01f34442b4293c4254937d25");
         $httpMethod = "GET";
         $headers[] = 'accept-encoding: gzip, deflate';
-        $headers[] ='x-bce-date: '. $this->getDate();
-        //$headers['accept'] = '/';
+        $headers[] ='x-bce-date: 2015-04-27T08:23:49Z';
+        $headers[] = 'accept:/';
         $headers[] = 'connection:keep-alive';
         $headers[] = 'content-type:application/json';
         $params = array();
         date_default_timezone_set("PRC");
         $timestamp = new \DateTime();
-        $timestamp->setTimestamp(time());
+        $timestamp->setTimestamp(1430123029);
         $options = array(SignOption::TIMESTAMP => $timestamp);
         $options = [];
 // $options = array(SignOption::TIMESTAMP => $timestamp, SignOption::HEADERS_TO_SIGN => array("Content-Type", "Host", "x-bce-date"));
