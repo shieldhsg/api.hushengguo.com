@@ -27,16 +27,12 @@ class SiteController extends BaseController
         //$headers['accept'] = '/';
         $headers[] = 'connection:keep-alive';
         $headers[] = 'content-type:application/json';
-        $headers = array("Host" => "bj.bcebos.com",
-            "Content-Length" => 8,
-            "Content-MD5" => "0a52730597fb4ffa01fc117d9e71e3a9",
-            "Content-Type" => "text/plain",
-            "x-bce-date" => "2015-04-27T08:23:49Z");
         $params = array();
         //date_default_timezone_set("PRC");
         $timestamp = new \DateTime();
         $timestamp->setTimestamp(time());
         $options = array(SignOption::TIMESTAMP => $timestamp);
+        $options = [];
 // $options = array(SignOption::TIMESTAMP => $timestamp, SignOption::HEADERS_TO_SIGN => array("Content-Type", "Host", "x-bce-date"));
         $ret = $signer->sign($credentials, $httpMethod, $uri, $headers, $params, $options);
         $headers[] =  'authorization: '.$ret;
