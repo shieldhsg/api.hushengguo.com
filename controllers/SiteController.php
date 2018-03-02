@@ -36,6 +36,7 @@ class SiteController extends BaseController
 // $options = array(SignOption::TIMESTAMP => $timestamp, SignOption::HEADERS_TO_SIGN => array("Content-Type", "Host", "x-bce-date"));
         $ret = $signer->sign($credentials, $httpMethod, $uri, $headers, $params, $options);
         $headers['authorization'] =  $ret;
+        var_dump($ret);die;
         $res = CurlHelper::get($host . $uri, $headers);
         print $res;
     }
