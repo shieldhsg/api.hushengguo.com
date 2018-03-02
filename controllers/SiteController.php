@@ -12,31 +12,11 @@ class SiteController extends BaseController
      */
     function actionIndex()
     {
-//        $eqid = '9ed09f0d0000c22d000000045a964bce';
-//        $host = 'referer.bj.baidubce.com';
-//        $uri = '/v1/eqid/' . $eqid;
-
-
         SampleSigner::__init();
 
-//        $signer = new SampleSigner();
-//        $credentials = array("ak" => "8136a22f945b44a1b4ed333bb214c1ad", "sk" => "dcd0abfb01f34442b4293c4254937d25");
-//        $httpMethod = "GET";
-//        $path = '/v1/eqid/' . $eqid;;
-//        $headers[] = 'accept-encoding: gzip, deflate';
-//        $headers[] = 'x-bce-date: ' . "2015-04-27T08:23:49Z";
-//        $headers[] = 'host: referer.bj.baidubce.com';
-//        $headers[] = 'accept: /';
-//        $headers[] = 'connection: keep-alive';
-//        $headers[] = 'content-type: application/json';
-//        $params = array("partNumber" => 9, "uploadId" => "VXBsb2FkIElpZS5tMnRzIHVwbG9hZA");
-//        date_default_timezone_set("PRC");
-//        $timestamp = new \DateTime();
-//        $timestamp->setTimestamp(1430123029);
-//        $options = array(SignOption::TIMESTAMP => $timestamp);
-// $options = array(SignOption::TIMESTAMP => $timestamp, SignOption::HEADERS_TO_SIGN => array("Content-Type", "Host", "x-bce-date"));
-        $time = time();
-        $getTime = date('Y-m-d').'T'.date('H:i:s').'Z';
+
+
+//签名示范代码
         $signer = new SampleSigner();
         $credentials = array("ak" => "0b0f67dfb88244b289b72b142befad0c","sk" => "bad522c2126a4618a8125f4b6cf6356f");
         $httpMethod = "PUT";
@@ -45,15 +25,15 @@ class SiteController extends BaseController
             "Content-Length" => 8,
             "Content-MD5" => "0a52730597fb4ffa01fc117d9e71e3a9",
             "Content-Type" => "text/plain",
-            "x-bce-date" => $getTime);
+            "x-bce-date" => "2015-04-27T08:23:49Z");
         $params = array("partNumber" => 9, "uploadId" => "VXBsb2FkIElpZS5tMnRzIHVwbG9hZA");
         date_default_timezone_set("PRC");
         $timestamp = new \DateTime();
-        $timestamp->setTimestamp($time);
-        //$options = array(SignOption::TIMESTAMP => $timestamp);
- $options = array(SignOption::TIMESTAMP => $timestamp, SignOption::HEADERS_TO_SIGN => array("Content-Type", "Host", "x-bce-date"));
+        $timestamp->setTimestamp(1430123029);
+        $options = array(SignOption::TIMESTAMP => $timestamp);
+// $options = array(SignOption::TIMESTAMP => $timestamp, SignOption::HEADERS_TO_SIGN => array("Content-Type", "Host", "x-bce-date"));
         $ret = $signer->sign($credentials, $httpMethod, $path, $headers, $params, $options);
-        $headers[] = 'authorization:' . $ret;
+        $headers['authorization'] =  $ret;
         $res = CurlHelper::get('bj.bcebos.com/' . $path, $headers);
         print $res;
     }
