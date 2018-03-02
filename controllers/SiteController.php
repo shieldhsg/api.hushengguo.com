@@ -25,7 +25,7 @@ class SiteController extends BaseController
         $headers['accept-encoding'] = 'gzip, deflate';
         $headers['x-bce-date'] = $this->getDate();
         $headers['host'] = 'referer.bj.baidubce.com';
-        $headers['accept'] = '/';
+        //$headers['accept'] = '/';
         $headers['connection'] = 'keep-alive';
         $headers['content-type'] = 'application/json';
         $params = array();
