@@ -27,7 +27,11 @@ class SiteController extends BaseController
         //$headers['accept'] = '/';
         $headers[] = 'connection:keep-alive';
         $headers[] = 'content-type:application/json';
-        $headers[] = 'content-type:application/json';
+        $headers = array("Host" => "bj.bcebos.com",
+            "Content-Length" => 8,
+            "Content-MD5" => "0a52730597fb4ffa01fc117d9e71e3a9",
+            "Content-Type" => "text/plain",
+            "x-bce-date" => "2015-04-27T08:23:49Z");
         $params = array();
         //date_default_timezone_set("PRC");
         $timestamp = new \DateTime();
