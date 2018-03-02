@@ -12,7 +12,7 @@ class SiteController extends BaseController
      */
     function actionIndex()
     {
-        $eqid = 'fc3f3bd80001c4ca000000045a9935fc';
+        $eqid = '9ed09f0d0000c22d000000045a964bce';
         $host = 'referer.bj.baidubce.com';
         $uri =  '/v1/eqid/'.$eqid;
         SampleSigner::__init();
@@ -29,15 +29,14 @@ class SiteController extends BaseController
         $headers['connection'] = 'keep-alive';
         $headers['content-type'] = 'application/json';
         $params = array();
-        date_default_timezone_set("PRC");
+        //date_default_timezone_set("PRC");
         $timestamp = new \DateTime();
-        $timestamp->setTimestamp(strtotime(date('Y-m-d H:i:s')));
+        $timestamp->setTimestamp(time());
         $options = array(SignOption::TIMESTAMP => $timestamp);
 // $options = array(SignOption::TIMESTAMP => $timestamp, SignOption::HEADERS_TO_SIGN => array("Content-Type", "Host", "x-bce-date"));
         $ret = $signer->sign($credentials, $httpMethod, $uri, $headers, $params, $options);
         $headers['authorization'] =  $ret;
-        //var_dump($ret);die;
-        $res = CurlHelper::get($host . $uri, $headers);
+        $res = CurlHelper::get('bj.bcebos.com/' . $uri, $headers);
         print $res;
     }
 
@@ -251,11 +250,10 @@ class SampleSigner
         } else {
             $timestamp = $options[SignOption::TIMESTAMP];
         }
-        $timestamp->setTimezone(new \DateTimeZone("UTC"));
-
+        //$timestamp->setTimezone(new \DateTimeZone("UTC"));
         //生成authString
         $authString = SampleSigner::BCE_AUTH_VERSION . '/' . $accessKeyId . '/'
-            . date('Y-m-d').'T'.date('H:i:s').'Z' . '/' . $expirationInSeconds;
+            . $timestamp->format("Y-m-d\TH:i:s\Z") . '/' . $expirationInSeconds;
 
         //使用sk和authString生成signKey
         $signingKey = hash_hmac('sha256', $authString, $secretAccessKey);
