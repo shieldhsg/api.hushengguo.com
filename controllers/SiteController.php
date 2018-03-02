@@ -12,7 +12,7 @@ class SiteController extends BaseController
      */
     function actionIndex()
     {
-        $eqid = '9ed09f0d0000c22d000000045a964bce';
+        $eqid = 'fc3f3bd80001c4ca000000045a9935fc';
         $host = 'referer.bj.baidubce.com';
         $uri =  '/v1/eqid/'.$eqid;
         SampleSigner::__init();
@@ -37,7 +37,7 @@ class SiteController extends BaseController
         $ret = $signer->sign($credentials, $httpMethod, $uri, $headers, $params, $options);
         $headers['authorization'] =  $ret;
         //var_dump($ret);die;
-        $res = CurlHelper::get('bj.bcebos.com/' . $uri, $headers);
+        $res = CurlHelper::get($host . $uri, $headers);
         print $res;
     }
 
