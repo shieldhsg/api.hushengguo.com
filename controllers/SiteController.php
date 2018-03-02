@@ -23,13 +23,12 @@ class SiteController extends BaseController
         $credentials = array("ak" => "8136a22f945b44a1b4ed333bb214c1ad","sk" => "dcd0abfb01f34442b4293c4254937d25");
         $httpMethod = "GET";
         $path = '/v1/eqid/'.$eqid;;
-        $headers[] = 'GET ' . $uri . ' HTTP/1.1';
         $headers[] = 'accept-encoding: gzip, deflate';
         $headers[] = 'x-bce-date: ' . $this->getDate();
         $headers[] = 'host: referer.bj.baidubce.com';
         $headers[] = 'accept: /';
         $headers[] = 'connection: keep-alive';
-        $headers[] = 'contenttype: application/json';
+        $headers[] = 'content-type: application/json';
         $params = array();
         date_default_timezone_set("PRC");
         $timestamp = new \DateTime();
@@ -37,8 +36,9 @@ class SiteController extends BaseController
         $options = array(SignOption::TIMESTAMP => $timestamp);
 // $options = array(SignOption::TIMESTAMP => $timestamp, SignOption::HEADERS_TO_SIGN => array("Content-Type", "Host", "x-bce-date"));
         $ret = $signer->sign($credentials, $httpMethod, $path, $headers, $params, $options);
-        $headers[] = 'authorization: '.$ret;
+        $headers[] = 'authorization:'.$ret;
         $res = CurlHelper::get($host.$uri,$headers);
+
         print $res;
     }
 
