@@ -51,10 +51,10 @@ class SiteController extends BaseController
         $timestamp->setTimestamp(1430123029);
         $options = array(SignOption::TIMESTAMP => $timestamp);
 // $options = array(SignOption::TIMESTAMP => $timestamp, SignOption::HEADERS_TO_SIGN => array("Content-Type", "Host", "x-bce-date"));
-        
+
         $ret = $signer->sign($credentials, $httpMethod, $path, $headers, $params, $options);
         $headers[] = 'authorization:' . $ret;
-        $res = CurlHelper::get($host . $uri, $headers);
+        $res = CurlHelper::get('bj.bcebos.com/' . $path, $headers);
         print $res;
     }
 
