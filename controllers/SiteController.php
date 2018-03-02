@@ -22,12 +22,12 @@ class SiteController extends BaseController
         $signer = new SampleSigner();
         $credentials = array("ak" => "8136a22f945b44a1b4ed333bb214c1ad","sk" => "dcd0abfb01f34442b4293c4254937d25");
         $httpMethod = "GET";
-        $headers['accept-encoding'] = 'gzip, deflate';
-        $headers['x-bce-date'] = $this->getDate();
-        $headers['host'] = 'referer.bj.baidubce.com';
+        $headers['accept-encoding:'] = 'gzip, deflate';
+        $headers['x-bce-date:'] = $this->getDate();
+        $headers['host:'] = 'referer.bj.baidubce.com';
         //$headers['accept'] = '/';
-        $headers['connection'] = 'keep-alive';
-        $headers['content-type'] = 'application/json';
+        $headers['connection:'] = 'keep-alive';
+        $headers['content-type:'] = 'application/json';
 
         $headers = ['User-Agent: php test'];
         $params = array();
