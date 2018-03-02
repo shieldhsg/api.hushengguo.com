@@ -18,7 +18,7 @@ class CurlHelper
         $data = curl_exec($curl);
         //关闭URL请求
         curl_close($curl);
-        var_dump($header);die;
+        //var_dump($header);die;
         //显示获得的数据
         return $data;
     }
