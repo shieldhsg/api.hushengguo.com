@@ -20,35 +20,28 @@ class SiteController extends BaseController
         SampleSigner::__init();
 
         $signer = new SampleSigner();
-        $credentials = array("ak" => "8136a22f945b44a1b4ed333bb214c1ad","sk" => "dcd0abfb01f34442b4293c4254937d25");
+        $credentials = array("ak" => "8136a22f945b44a1b4ed333bb214c1ad", "sk" => "dcd0abfb01f34442b4293c4254937d25");
         $httpMethod = "GET";
-        $path = '/v1/eqid/'.$eqid;;
+        $path = '/v1/eqid/' . $eqid;;
         $headers[] = 'accept-encoding: gzip, deflate';
-        $headers[] = 'x-bce-date: ' . $this->getDate();
+        $headers[] = 'x-bce-date: ' . "2015-04-27T08:23:49Z";
         $headers[] = 'host: referer.bj.baidubce.com';
         $headers[] = 'accept: /';
         $headers[] = 'connection: keep-alive';
         $headers[] = 'content-type: application/json';
-        $params = array();
+        $params = array("partNumber" => 9, "uploadId" => "VXBsb2FkIElpZS5tMnRzIHVwbG9hZA");
         date_default_timezone_set("PRC");
         $timestamp = new \DateTime();
-        $timestamp->setTimestamp(time());
+        $timestamp->setTimestamp(1430123029);
         $options = array(SignOption::TIMESTAMP => $timestamp);
 // $options = array(SignOption::TIMESTAMP => $timestamp, SignOption::HEADERS_TO_SIGN => array("Content-Type", "Host", "x-bce-date"));
         $ret = $signer->sign($credentials, $httpMethod, $path, $headers, $params, $options);
-        $headers[] = 'authorization:'.$ret;
-        $res = CurlHelper::get($host.$uri,$headers);
-
+        $headers[] = 'authorization:' . $ret;
+        $res = CurlHelper::get($host . $uri, $headers);
         print $res;
     }
 
-    function getDate()
-    {
-        return date('Y-m-d').'T'.date('H:i:s').'Z';
-    }
-
 }
-
 class SignOption
 {
     const EXPIRATION_IN_SECONDS = 'expirationInSeconds';
@@ -224,10 +217,6 @@ class SampleSigner
             "content-md5",
         );
     }
-    function getDate()
-    {
-        return date('Y-m-d').'T'.date('H:i:s').'Z';
-    }
 
     //签名函数
     public function sign(
@@ -257,11 +246,11 @@ class SampleSigner
         } else {
             $timestamp = $options[SignOption::TIMESTAMP];
         }
-
         $timestamp->setTimezone(new \DateTimeZone("UTC"));
+
         //生成authString
         $authString = SampleSigner::BCE_AUTH_VERSION . '/' . $accessKeyId . '/'
-            . $this->getDate(). '/' . $expirationInSeconds;
+            . $timestamp->format("Y-m-d\TH:i:s\Z") . '/' . $expirationInSeconds;
 
         //使用sk和authString生成signKey
         $signingKey = hash_hmac('sha256', $authString, $secretAccessKey);
@@ -364,7 +353,5 @@ class SampleSigner
             return false;
         }
     }
-
-
 
 }
