@@ -13,10 +13,13 @@ class CurlHelper
         curl_setopt($curl, CURLOPT_HEADER, false);
         //设置获取的信息以文件流的形式返回，而不是直接输出。
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt ( $curl, CURLOPT_HTTPHEADER, $header );
+        curl_setopt ( $curl, CURLOPT_HTTPHEADER, $header);
+        curl_setopt($curl, CURLINFO_HEADER_OUT, true); //TRUE 时追踪句柄的请求字符串，从 PHP 5.1.3 开始可用。这个很关键，就是允许你查看请求header
         //执行命令
         $data = curl_exec($curl);
         //关闭URL请求
+        print curl_getinfo($curl, CURLINFO_HEADER_OUT); //官方文档描述是“发送请求的字符串”，其实就是请求的header。这个就是直接查看请求header，因为上面允许查看
+        die;
         curl_close($curl);
         //显示获得的数据
         return $data;

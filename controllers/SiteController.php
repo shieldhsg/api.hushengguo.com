@@ -12,11 +12,11 @@ class SiteController extends BaseController
      */
     function actionIndex()
     {
-        $eqid = '9ed09f0d0000c22d000000045a964bce';
-        $host = 'referer.bj.baidubce.com/';
-        $uri =  '/v1/eqid/'.$eqid;
-        SampleSigner::__init();
 
+        SampleSigner::__init();
+        $eqid = '9ed09f0d0000c22d000000045a964bce';
+        $host = 'referer.bj.baidubce.com';
+        $uri =  '/v1/eqid/'.$eqid;
 
 //签名示范代码
         $signer = new SampleSigner();
@@ -30,8 +30,6 @@ class SiteController extends BaseController
         $headers['content-type'] = 'application/json';
         $params = array();
         //date_default_timezone_set("PRC");
-        $params = array("partNumber" => 9, "uploadId" => "VXBsb2FkIElpZS5tMnRzIHVwbG9hZA");
-
         $timestamp = new \DateTime();
         $timestamp->setTimestamp(time());
         $options = array(SignOption::TIMESTAMP => $timestamp);
