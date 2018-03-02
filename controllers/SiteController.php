@@ -12,20 +12,20 @@ class SiteController extends BaseController
      */
     function actionIndex()
     {
-//        $b = 'PUT'.'\n'.
-//'/v1/test/myfolder/readme.txt'.'\n'.
-//'partNumber=9&uploadId=a44cc9bab11cbd156984767aad637851'.'\n'.
-//'content-length:8'.'\n'.
-//'content-md5:NFzcPqhviddjRNnSOGo4rw=='.'\n'.
-//'content-type:text%2Fplain'.'\n'.
-//'host:bj.bcebos.com'.'\n'.
+//        $b = 'PUT'."\n".
+//'/v1/test/myfolder/readme.txt'."\n".
+//'partNumber=9&uploadId=a44cc9bab11cbd156984767aad637851'."\n".
+//'content-length:8'."\n".
+//'content-md5:NFzcPqhviddjRNnSOGo4rw=='."\n".
+//'content-type:text%2Fplain'."\n".
+//'host:bj.bcebos.com'."\n".
 //'x-bce-date:2015-04-27T08%3A23%3A49Z';
 //        //test
 //        $a =  strtolower(bin2hex(hash_hmac('sha256',
 //            $b,'1d5ce5f464064cbee060330d973218821825ac6952368a482a592e6615aef479', true)));
-
-
-        //var_dump($a);die;
+//
+//
+//        var_dump($a);die;
         $eqid = '9ed09f0d0000c22d000000045a964bce';
         $host = 'referer.bj.baidubce.com';
         $uri =  '/v1/eqid/'.$eqid;
@@ -52,11 +52,12 @@ class SiteController extends BaseController
         $http_method = "GET";
         $canonicalURI = $this->uriEncode($uri,false);
         $canonicalQueryString = '';
-        $canonicalHeaders = 'host:bj.bcebos.com';
+        $canonicalHeaders = 'host:referer.bj.baidubce.com';
         $canonicalRequest = $http_method."\n".$canonicalURI."\n".$canonicalQueryString. "\n".$canonicalHeaders;
         $signKey = strtolower(bin2hex(hash_hmac('sha256', $preFix, $secretKey, true)));
         $signature = strtolower(bin2hex(hash_hmac('sha256', $canonicalRequest,$signKey , true)));
         $signString = 'bce-auth-v1/'.$accessKey.'/'.$this->getDate().'/'.$expireTime.'//'.$signature;
+        //var_dump($signString);die;
         return $signString;
     }
 
