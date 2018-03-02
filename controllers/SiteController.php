@@ -28,7 +28,6 @@ class SiteController extends BaseController
         $headers[] = 'connection:keep-alive';
         $headers[] = 'content-type:application/json';
         $headers[] = 'content-type:application/json';
-        $headers [] = 'User-Agent:php test';
         $params = array();
         //date_default_timezone_set("PRC");
         $timestamp = new \DateTime();
