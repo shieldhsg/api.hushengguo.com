@@ -21,7 +21,6 @@ class CurlHelper
         }
         //执行命令
         $data = curl_exec($curl);
-        var_dump(curl_error($curl));die;
         //关闭URL请求
         curl_close($curl);
         //显示获得的数据
