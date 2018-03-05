@@ -33,7 +33,8 @@ class SiteController extends BaseController
         $timestamp->setTimestamp(time());
  $options = array(SignOption::TIMESTAMP => $timestamp, SignOption::HEADERS_TO_SIGN => array("content-type", "host", "x-bce-date"));
         $ret = $signer->sign($credentials, $httpMethod, $uri, $headers, $params, $options);
-        $headers[] =  'authorization: '.$ret;
+        $headers['authorization'] =  $ret;
+
         $res = CurlHelper::get($host . $uri, $headers);
         print $res;
     }
@@ -286,7 +287,6 @@ class SampleSigner
         $canonicalRequest = "$httpMethod\n$canonicalURI\n"
             . "$canonicalQueryString\n$canonicalHeader";
 
-        //var_dump($canonicalHeader);die;
         //使用signKey和标准请求串完成签名
         $signature = hash_hmac('sha256', $canonicalRequest, $signingKey);
 
