@@ -299,7 +299,6 @@ class SampleSigner
 
         //组成最终签名串
         $authorizationHeader = "$authString/$signedHeaders/$signature";
-        var_dump($authorizationHeader);die;
         return $authorizationHeader;
     }
 
