@@ -28,14 +28,23 @@ class SiteController extends BaseController
         $headers['host'] = $host;
         $headers['connection'] = 'keep-alive';
         $headers['content-type'] = 'application/json';
+        var_dump($headers);die;
         $params = array();
         $timestamp = new \DateTime();
         $timestamp->setTimestamp(time());
  $options = array(SignOption::TIMESTAMP => $timestamp, SignOption::HEADERS_TO_SIGN => array("content-type", "host", "x-bce-date"));
         $ret = $signer->sign($credentials, $httpMethod, $uri, $headers, $params, $options);
-        $headers['authorization'] =  $ret;
+        $headersCurl = array(
+          'accept-encoding: '.$headers['accept-encoding'],
+          'x-bce-date: '.$headers['x-bce-date'],
+          'accept: '.$headers['accept'],
+          'host: '.$headers['host'],
+          'connection: '. $headers['connection'],
+          'content-type: '.$headers['content-type'],
+          'authorization: '.$ret
+        );
 
-        $res = CurlHelper::get($host . $uri, $headers);
+        $res = CurlHelper::get($host . $uri, $headersCurl);
         print $res;
     }
 
