@@ -17,6 +17,7 @@ class SiteController extends BaseController
         $eqid = '9ed09f0d0000c22d000000045a964bce';
         $host = 'referer.bj.baidubce.com';
         $uri =  '/v1/eqid/'.$eqid;
+        date_default_timezone_set("PRC");
         $time = time();
 //签名示范代码
         $signer = new SampleSigner();
@@ -258,7 +259,7 @@ class SampleSigner
         } else {
             $timestamp = $options[SignOption::TIMESTAMP];
         }
-        //$timestamp->setTimezone(new \DateTimeZone("UTC"));
+        $timestamp->setTimezone(new \DateTimeZone("UTC"));
         //生成authString
         $authString = SampleSigner::BCE_AUTH_VERSION . '/' . $accessKeyId . '/'
             . $timestamp->format("Y-m-d\TH:i:s\Z") . '/' . $expirationInSeconds;
@@ -296,7 +297,6 @@ class SampleSigner
             . "$canonicalQueryString\n$canonicalHeader";
         //使用signKey和标准请求串完成签名
         $signature = hash_hmac('sha256', $canonicalRequest, $signingKey);
-
         //组成最终签名串
         $authorizationHeader = "$authString/$signedHeaders/$signature";
         return $authorizationHeader;
