@@ -14,7 +14,7 @@ class SiteController extends BaseController
     {
 
         SampleSigner::__init();
-        $eqid = 'fa74681900012292000000045a9cc622';
+        $eqid = 'a2455649000131a4000000045a9cc628';
         $host = 'referer.bj.baidubce.com';
         $uri =  '/v1/eqid/'.$eqid;
         date_default_timezone_set("PRC");
