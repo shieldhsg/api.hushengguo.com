@@ -17,20 +17,21 @@ class SiteController extends BaseController
         $eqid = '9ed09f0d0000c22d000000045a964bce';
         $host = 'referer.bj.baidubce.com';
         $uri =  '/v1/eqid/'.$eqid;
-
+        $time = time();
 //签名示范代码
         $signer = new SampleSigner();
         $credentials = array("ak" => "8136a22f945b44a1b4ed333bb214c1ad","sk" => "dcd0abfb01f34442b4293c4254937d25");
         $httpMethod = "GET";
         $headers['accept-encoding'] = 'gzip, deflate';
-        $headers['x-bce-date'] =$this->getDate();
+        $headers['x-bce-date'] =$this->getDate($time);
         $headers['accept'] = '*/*';
         $headers['host'] = $host;
         $headers['connection'] = 'keep-alive';
         $headers['content-type'] = 'application/json';
-        $params = array();
+        $params = array(
+        );
         $timestamp = new \DateTime();
-        $timestamp->setTimestamp(time());
+        $timestamp->setTimestamp($time);
  $options = array(SignOption::TIMESTAMP => $timestamp, SignOption::HEADERS_TO_SIGN => array("content-type", "host", "x-bce-date"));
         $ret = $signer->sign($credentials, $httpMethod, $uri, $headers, $params, $options);
         $headersCurl = array(
@@ -47,9 +48,9 @@ class SiteController extends BaseController
         print $res;
     }
 
-    function getDate()
+    function getDate($time)
     {
-        return date('Y-m-d').'T'.date('H:i:s').'Z';
+        return date('Y-m-d',$time).'T'.date('H:i:s',$time).'Z';
     }
 
 }
@@ -261,7 +262,6 @@ class SampleSigner
         //生成authString
         $authString = SampleSigner::BCE_AUTH_VERSION . '/' . $accessKeyId . '/'
             . $timestamp->format("Y-m-d\TH:i:s\Z") . '/' . $expirationInSeconds;
-
         //使用sk和authString生成signKey
         $signingKey = hash_hmac('sha256', $authString, $secretAccessKey);
 
@@ -294,13 +294,12 @@ class SampleSigner
         //组成标准请求串
         $canonicalRequest = "$httpMethod\n$canonicalURI\n"
             . "$canonicalQueryString\n$canonicalHeader";
-
         //使用signKey和标准请求串完成签名
         $signature = hash_hmac('sha256', $canonicalRequest, $signingKey);
 
         //组成最终签名串
         $authorizationHeader = "$authString/$signedHeaders/$signature";
-
+        var_dump($authorizationHeader);die;
         return $authorizationHeader;
     }
 
