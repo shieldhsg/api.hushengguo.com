@@ -286,7 +286,7 @@ class SampleSigner
         $canonicalRequest = "$httpMethod\n$canonicalURI\n"
             . "$canonicalQueryString\n$canonicalHeader";
 
-        var_dump($canonicalHeader);die;
+        //var_dump($canonicalHeader);die;
         //使用signKey和标准请求串完成签名
         $signature = hash_hmac('sha256', $canonicalRequest, $signingKey);
 
