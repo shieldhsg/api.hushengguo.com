@@ -24,7 +24,7 @@ class SiteController extends BaseController
         $httpMethod = "GET";
         $headers[] = 'accept-encoding: gzip, deflate';
         $headers[] ='x-bce-date: 2015-04-27T08:23:49Z';
-        $headers[] = 'accept:/';
+        $headers[] = 'accept: */*';
         $headers[] = 'connection:keep-alive';
         $headers[] = 'content-type:application/json';
         $params = array();
@@ -32,7 +32,7 @@ class SiteController extends BaseController
         $timestamp = new \DateTime();
         $timestamp->setTimestamp(1430123029);
         $options = array(SignOption::TIMESTAMP => $timestamp);
-        $options = [];
+//        $options = [];
 // $options = array(SignOption::TIMESTAMP => $timestamp, SignOption::HEADERS_TO_SIGN => array("Content-Type", "Host", "x-bce-date"));
         $ret = $signer->sign($credentials, $httpMethod, $uri, $headers, $params, $options);
         $headers[] =  'authorization: '.$ret;
