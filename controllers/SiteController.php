@@ -22,18 +22,16 @@ class SiteController extends BaseController
         $signer = new SampleSigner();
         $credentials = array("ak" => "8136a22f945b44a1b4ed333bb214c1ad","sk" => "dcd0abfb01f34442b4293c4254937d25");
         $httpMethod = "GET";
-        $headers[] = 'accept-encoding: gzip, deflate';
-        $headers[] ='x-bce-date: 2015-04-27T08:23:49Z';
-        $headers[] = 'accept: */*';
-        $headers[] = 'connection:keep-alive';
-        $headers[] = 'content-type:application/json';
+        $headers['accept-encoding'] = 'gzip, deflate';
+        $headers['x-bce-date'] =$this->getDate();
+        $headers['accept'] = '*/*';
+        $headers['host'] = $host;
+        $headers['connection'] = 'keep-alive';
+        $headers['content-type'] = 'application/json';
         $params = array();
-        date_default_timezone_set("PRC");
         $timestamp = new \DateTime();
-        $timestamp->setTimestamp(1430123029);
-        $options = array(SignOption::TIMESTAMP => $timestamp);
-//        $options = [];
-// $options = array(SignOption::TIMESTAMP => $timestamp, SignOption::HEADERS_TO_SIGN => array("Content-Type", "Host", "x-bce-date"));
+        $timestamp->setTimestamp(time());
+ $options = array(SignOption::TIMESTAMP => $timestamp, SignOption::HEADERS_TO_SIGN => array("content-type", "host", "x-bce-date"));
         $ret = $signer->sign($credentials, $httpMethod, $uri, $headers, $params, $options);
         $headers[] =  'authorization: '.$ret;
         $res = CurlHelper::get($host . $uri, $headers);
@@ -250,7 +248,7 @@ class SampleSigner
         } else {
             $timestamp = $options[SignOption::TIMESTAMP];
         }
-        $timestamp->setTimezone(new \DateTimeZone("UTC"));
+        //$timestamp->setTimezone(new \DateTimeZone("UTC"));
         //生成authString
         $authString = SampleSigner::BCE_AUTH_VERSION . '/' . $accessKeyId . '/'
             . $timestamp->format("Y-m-d\TH:i:s\Z") . '/' . $expirationInSeconds;
@@ -269,7 +267,6 @@ class SampleSigner
         if (isset($options[SignOption::HEADERS_TO_SIGN])) {
             $headersToSignOption = $options[SignOption::HEADERS_TO_SIGN];
         }
-
         $headersToSign = SampleSigner::getHeadersToSign($headers, $headersToSignOption);
 
         //生成标准化header
@@ -289,6 +286,7 @@ class SampleSigner
         $canonicalRequest = "$httpMethod\n$canonicalURI\n"
             . "$canonicalQueryString\n$canonicalHeader";
 
+        var_dump($canonicalHeader);die;
         //使用signKey和标准请求串完成签名
         $signature = hash_hmac('sha256', $canonicalRequest, $signingKey);
 
