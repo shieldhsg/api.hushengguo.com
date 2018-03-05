@@ -28,7 +28,6 @@ class SiteController extends BaseController
         $headers['host'] = $host;
         $headers['connection'] = 'keep-alive';
         $headers['content-type'] = 'application/json';
-        var_dump($headers);die;
         $params = array();
         $timestamp = new \DateTime();
         $timestamp->setTimestamp(time());
