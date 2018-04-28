@@ -40,7 +40,7 @@ class UploadController extends ApiController
                         'name' => $fileName,
                         'type' => $model->file->type,
                         'size' => $model->file->size,
-                        'filename' => realpath("../../uploads/").$fileName
+                        'filename' => realpath("../../uploads/")."/".$fileName
                     ];
                     if($model->load($data)&&$model->save(false)){
                         $returnData = $model->attributes;
