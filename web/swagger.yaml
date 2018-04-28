@@ -68,16 +68,64 @@ paths:
           description: 模块id
           required: false
           type: integer
-        - name: display_name
-          in: query
-          description: 操作人
-          required: false
-          type: string
       responses:
         '200':
           description: 操作成功
           schema:
-
+  /api/article/get-detail:
+    get:
+      tags:
+        - article
+      summary: 获取文章列表
+      description: '根据文章id获取文章内容'
+      produces:
+        - application/json
+      parameters:
+        - name: article_id
+          in: query
+          description: 文章id
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: 操作成功
+          schema:
+  /api/image:
+      get:
+        tags:
+          - image
+        summary: 获取图片列表
+        description: '根据模块id获取图片列表'
+        produces:
+          - application/json
+        parameters:
+          - name: module_id
+            in: query
+            description: 模块id
+            required: false
+            type: integer
+        responses:
+          '200':
+            description: 操作成功
+            schema:
+  /api/fragment:
+        get:
+          tags:
+            - fragment
+          summary: 获取碎片列表
+          description: '根据模块id获取碎片'
+          produces:
+            - application/json
+          parameters:
+            - name: module_id
+              in: query
+              description: 模块id
+              required: false
+              type: integer
+          responses:
+            '200':
+              description: 操作成功
+              schema:
 definitions:
   Article:
     properties:
@@ -90,9 +138,6 @@ definitions:
       abstract:
         description: 文章摘要
         example: 据悉
-      content:
-        description: 文章具体内容
-        example: 哈哈哈
     type: object
     items:
       $ref: '#/definitions/Article'
@@ -102,4 +147,14 @@ tags:
     externalDocs:
       description: 根据模块查询文章列表
       url: 'http://api.hushengguo.com/api/article'
+  - name: fragment
+    description: 碎片列表
+    externalDocs:
+      description: 根据模块查询碎片列表
+      url: 'http://api.hushengguo.com/api/fragment'
+  - name: image
+    description: 图片列表
+    externalDocs:
+      description: 根据模块查询图片列表
+      url: 'http://api.hushengguo.com/api/image'
 

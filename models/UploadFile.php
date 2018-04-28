@@ -10,20 +10,6 @@ class UploadFile extends ActiveRecord
 {
     public $file;
 
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => TimestampBehavior::className(),
-                'createdAtAttribute' => 'createtime',
-                'updatedAtAttribute' => 'updatetime',
-                'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['createtime', 'updatetime'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updatetime'],
-                ]
-            ]
-        ];
-    }
 
     public function fields()
     {
@@ -37,12 +23,9 @@ class UploadFile extends ActiveRecord
             'extension',
             'path',
             'url',
-            'username',
+            'filename',
             'ip' => function(){
                 return long2ip($this->ip);
-            },
-            'createtime' => function(){
-                return date('Y-m-d H:i', $this->createtime);
             }
         ];
     }
@@ -56,14 +39,14 @@ class UploadFile extends ActiveRecord
     //表名
     public static function tableName()
     {
-        return "{{%upload_file}}";
+        return "{{%uploaded_file}}";
     }
 
     public function rules()
     {
         return [
             [['file'], 'file', 'skipOnEmpty' => false, 'maxSize'=>1024*1024*50, 'tooBig'=>'文件上传过大(50M以内)!'],
-            [['uuid','original_name','name','type','size','extension','path','url','username','ip'],'safe']
+            [['uuid','original_name','name','type','size','extension','path','url','filename','ip'],'safe']
         ];
     }
 

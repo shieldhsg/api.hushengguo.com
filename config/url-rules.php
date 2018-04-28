@@ -8,11 +8,29 @@ $baseRuleConfigs = [
 
 //api接口路由
 $apiRuleConfigs = [
+    //文章列表接口
     [
         'controller' => ['api/article'],
         'patterns' => [
             //获取信息
-            'GET' => 'get'
+            'GET' => 'get',
+            'GET get-detail'=>'get-detail'
+        ],
+    ],
+    //碎片列表接口
+    [
+        'controller' => ['api/fragment'],
+        'patterns' => [
+            //获取信息
+            'GET' => 'get',
+        ],
+    ],
+    //碎片列表接口
+    [
+        'controller' => ['api/image'],
+        'patterns' => [
+            //获取信息
+            'GET' => 'get',
         ],
     ],
     //上传接口
@@ -88,19 +106,6 @@ $apiUrls = array_map(function($unit)
         //默认
         'tokens' => [
             '{id}' => '<id:\\d[\\d,]*>',
-            '{projectId}' => '<projectId:\\d+>',
-            '{accidentId}' => '<accidentId:\\d+>',
-            '{versionId}' => '<versionId:\\d+>',
-            '{scheduleId}'=> '<scheduleId:\\d+>',
-            '{typeId}'=> '<typeId:\\d+>',
-            '{standardId}'=> '<standardId:\\d+>',
-            '{info_id}'=> '<info_id:\\d+>',
-            '{item_id}'=> '<item_id:\\d+>',
-            '{material_id}'=> '<material_id:\\d+>',
-            '{dataId}'=> '<dataId:\\d+>',
-            '{logId}'=> '<logId:\\d+>',
-            '{rater_id}'=>'<rater_id:\\d+>',
-            '{standard_id}'=>'<standard_id:\\d+>'
         ]
     ];
     return array_merge($config, $urlRule);
