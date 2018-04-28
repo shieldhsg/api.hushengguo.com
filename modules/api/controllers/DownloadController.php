@@ -30,8 +30,7 @@ class DownloadController extends ApiController
         if(empty($model)){
             return $this->responseService->error(ResponseHelper::DATA_NOT_FOUND,ResponseHelper::DATA_NOT_FOUND_MSG);
         }
-        $response = Yii::$app->getResponse();
         $url = str_replace('../../',Yii::$app->params['host'],$model->filename);
-        return $response->sendFile($url.'/'.$model->name);
+        return Yii::$app->response->sendFile($url,$model->name);
     }
 }
