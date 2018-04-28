@@ -32,6 +32,6 @@ class DownloadController extends ApiController
         }
         $response = Yii::$app->getResponse();
         $url = str_replace('../../',Yii::$app->params['host'],$model->filename);
-        return $response->sendFile($url, $model->name);
+        return $response->sendFile($url.'/'.$model->name);
     }
 }
