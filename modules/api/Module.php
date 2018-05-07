@@ -21,7 +21,6 @@ class Module extends \yii\base\Module
         \Yii::configure(\Yii::$app, [
             'components' => [
                 'request' => [
-                    'cookieValidationKey' => '_9xfkUZzSnDUllOKvZibzkZC4B0n1-UUZU',
                     'class' => '\yii\web\Request',
                     'enableCookieValidation' => false,
                     'parsers' => [

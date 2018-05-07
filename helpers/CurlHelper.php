@@ -24,11 +24,6 @@ class CurlHelper
         return $data;
     }
 
-    public static  function post()
-    {
-
-    }
-
 }
 
 ?>
